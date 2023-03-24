@@ -3,7 +3,7 @@ const router = express.Router();
 const Employee = require('../models/schema');
 
 // Create employee
-router.post('/employees', async (req, res) => {
+router.post('/employees/add', async (req, res) => {
   try {
     const employee = new Employee(req.body);
     await employee.save();
