@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import { TextField, Button } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
 
-function Create({ history }) {
+export default function EditEmployee({ employee, onUpdate }) {
+  const [values, setValues] = useState(employee);
   const [fullname, setFullname] = useState('');
   const [nameWithInitials, setNameWithInitials] = useState('');
   const [preferredName, setPreferredName] = useState('');
@@ -17,40 +18,23 @@ function Create({ history }) {
   const [experience, setExperience] = useState('');
   const [salary, setSalary] = useState('');
   const [personalNotes, setPersonalNotes] = useState('');
-  
+  const handleChange = (event) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    // handle form submission here
+    await axios.put(`http://localhost:5000/employees/${employee._id}`, values);
+    onUpdate();
+  };
 
-    const formData = {
-          fullname,
-          nameWithInitials,
-          preferredName,
-          gender,
-          dob,
-          email,
-          mobileNumber,
-          designation,
-          employeeType,
-          joinedDate,
-          experience,
-          salary,
-          personalNotes
-        };
-        try {
-          await axios.post('http://localhost:5000/employees/create', formData);
-          alert("Saved Succesful");
-        } catch (error) {
-          alert("Save Failed");
-        }
-      };
-  
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="col-md-6">
-        <h2 className="text-center mb-4">Create New Employee</h2>
-        <form onSubmit={(event) => handleSubmit(event)}>
+    <div className="col-md-6">
+    <form onSubmit={handleSubmit}>
         <div className="row">
 
     <div className="col-md-6">
@@ -164,14 +148,13 @@ function Create({ history }) {
   <Button variant="primary" onClick={handleSubmit}>Submit</Button> 
   </div>
 
-        </form>
-        
-      </div>
+    
+      <Button variant="contained" type="submit">
+        Update
+      </Button>
+    </form>
     </div>
+  </div>
 
   );
-  
-  
 }
-
-export default Create;

@@ -13,10 +13,7 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  employeeId: {
-    type: Number,
-    required: flase,
-  },
+ 
   gender: {
     type: String,
     enum: ['Male', 'Female'],
@@ -31,7 +28,7 @@ const employeeSchema = new mongoose.Schema({
     required: true,
   },
   mobileNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   designation: {
@@ -40,11 +37,11 @@ const employeeSchema = new mongoose.Schema({
   },
   employeeType: {
     type: String,
-    enum: ['fullTime', 'partTime', 'contract', 'other'],
+    enum: ['Fulltime', 'Parttime', 'Contractor','Intern', 'Other'],
     required: true,
   },
   experience: {
-    type: Number,
+    type: String,
     required: true,
   },
   joinedDate: {
@@ -52,7 +49,7 @@ const employeeSchema = new mongoose.Schema({
     required: true,
   },
   salary: {
-    type: Number,
+    type: String,
     required: true,
   },
   personalNotes: {
